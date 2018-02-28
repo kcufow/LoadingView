@@ -27,6 +27,7 @@ public abstract class LoadingView extends FrameLayout{
     private View emptyView;                   // 空界面
     private View contentView;                 // 加载成功的界面
     private Context mContext;
+    private GifImageView gifImageView;
 
     public LoadingView(Context context) {
         this(context,null);
@@ -142,11 +143,16 @@ public abstract class LoadingView extends FrameLayout{
     private View creatLoadingView() {
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading, null);
-        GifImageView gifImageView = (GifImageView) view.findViewById(R.id.gif_view);
+        gifImageView = (GifImageView) view.findViewById(R.id.gif_view);
         gifImageView.setImageResource(R.drawable.num1);
         return view;
     }
 
+    public void setLoadingImageResource(int resId){
+        if (gifImageView != null) {
+            gifImageView.setImageResource(resId);
+        }
+    }
 
     public void setStatus(int status) {
         this.status = status;
