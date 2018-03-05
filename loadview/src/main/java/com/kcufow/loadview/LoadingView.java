@@ -65,11 +65,8 @@ public abstract class LoadingView extends FrameLayout{
 
         if (contentView==null){
 
-            if (status == STATE_SUCCESS){
                 contentView = creatContentView();
                 this.addView(contentView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-                initView(contentView);
-            }
 
         }
         showStateView();
@@ -129,6 +126,7 @@ public abstract class LoadingView extends FrameLayout{
                 break;
             case STATE_SUCCESS:
                 showView(contentView);
+                initView(contentView);
                 break;
             default:
                 showView(errorView);
