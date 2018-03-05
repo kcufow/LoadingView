@@ -28,6 +28,7 @@ public abstract class LoadingView extends FrameLayout{
     private View contentView;                 // 加载成功的界面
     private Context mContext;
     private GifImageView gifImageView;
+    private boolean isFirst = true;
 
     public LoadingView(Context context) {
         this(context,null);
@@ -50,7 +51,7 @@ public abstract class LoadingView extends FrameLayout{
         this.setBackgroundResource(R.color.colorPageBg);
 
         if (loadingView == null) {
-            loadingView = creatLoadingView();
+            loadingView = createLoadingView();
             this.addView(loadingView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         }
         if (errorView == null) {
@@ -126,7 +127,12 @@ public abstract class LoadingView extends FrameLayout{
                 break;
             case STATE_SUCCESS:
                 showView(contentView);
-                initView(contentView);
+              if (isFirst){
+                  initView(contentView);
+                  isFirst = false;
+              }
+
+
                 break;
             default:
                 showView(errorView);
@@ -147,7 +153,7 @@ public abstract class LoadingView extends FrameLayout{
 
     protected abstract void loadData();
 
-    private View creatLoadingView() {
+    private View createLoadingView() {
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading, null);
         gifImageView = (GifImageView) view.findViewById(R.id.gif_view);
