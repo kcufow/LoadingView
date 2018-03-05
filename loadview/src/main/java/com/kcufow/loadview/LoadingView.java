@@ -61,13 +61,22 @@ public abstract class LoadingView extends FrameLayout{
             emptyView = creatEmptyView();
             this.addView(emptyView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         }
+
+
         if (contentView==null){
-            contentView = creatContentView();
-            this.addView(contentView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+
+            if (status == STATE_SUCCESS){
+                contentView = creatContentView();
+                this.addView(contentView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+                initView(contentView);
+            }
+
         }
         showStateView();
 
     }
+
+    protected abstract void initView(View contentView);
 
     private View creatContentView() {
         Object  o= getLayoutRes();
