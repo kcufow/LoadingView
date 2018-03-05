@@ -29,6 +29,7 @@ public abstract class LoadingView extends FrameLayout{
     private Context mContext;
     private GifImageView gifImageView;
     private boolean isFirst = true;
+    private Integer resId;
 
     public LoadingView(Context context) {
         this(context,null);
@@ -41,9 +42,7 @@ public abstract class LoadingView extends FrameLayout{
     public LoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-
         init();
-
     }
 
     private void init() {
@@ -62,13 +61,9 @@ public abstract class LoadingView extends FrameLayout{
             emptyView = creatEmptyView();
             this.addView(emptyView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         }
-
-
         if (contentView==null){
-
                 contentView = creatContentView();
                 this.addView(contentView,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-
         }
         showStateView();
 
@@ -132,7 +127,6 @@ public abstract class LoadingView extends FrameLayout{
                   isFirst = false;
               }
 
-
                 break;
             default:
                 showView(errorView);
@@ -157,11 +151,18 @@ public abstract class LoadingView extends FrameLayout{
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading, null);
         gifImageView = (GifImageView) view.findViewById(R.id.gif_view);
-        gifImageView.setImageResource(R.drawable.num1);
+        if (resId != null) {
+            gifImageView.setImageResource(resId);
+        }else {
+            gifImageView.setImageResource(R.drawable.num1);
+        }
+
         return view;
     }
 
     public void setLoadingImageResource(int resId){
+        this.resId = resId;
+
         if (gifImageView != null) {
             gifImageView.setImageResource(resId);
         }
